@@ -80,6 +80,11 @@ webpack(config).run(function (err, stats) {
     logger.error(err.message);
     process.exit(1);
   }
+  if (stats.hasErrors()) {
+    logger.error('Failed to build the storybook');
+    stats.toJson().errors.forEach(e => console.error(e));
+    process.exit(1);
+  }
 
   const data = {
     publicPath: config.output.publicPath,
